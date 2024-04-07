@@ -83,7 +83,7 @@ jobs:
       - name: Terraform init
         working-directory: infra-as-code
         run: terraform init -upgrade=true -reconfigure -compact-warnings
-        
+
       - name: Terraform Plan
         working-directory: infra-as-code
         env:
@@ -94,3 +94,8 @@ jobs:
           TF_VAR_image_tag: latest
         run: |
           terraform plan -out="${{ runner.temp }}/plan.changes" -input=false
+      
+      - name: Terraform Apply
+        working-directory: infra-as-code
+        run: |
+          terraform apply -auto-approve -input=false "${{ runner.temp }}/plan.changes"
