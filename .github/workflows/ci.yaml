@@ -60,6 +60,9 @@ jobs:
 
   infra-setup:
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
     # needs: 
     #   - image-build-and-push
     steps:
