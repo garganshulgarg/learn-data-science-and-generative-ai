@@ -5,6 +5,12 @@ terraform {
       version = "5.11.0"
     }
   }
+  backend "s3" {
+    encrypt = true
+    bucket         = "terraform-state-anshul"
+    key            = "learn-data-science-and-generative-ai/dev/terraform.tfstate"
+    region         = "us-east-1"
+  }
 }
 
 # The default AWS Provider

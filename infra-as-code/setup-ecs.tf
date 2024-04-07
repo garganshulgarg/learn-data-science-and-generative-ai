@@ -6,22 +6,22 @@ resource "aws_ecs_task_definition" "task" {
   family                   = "learn-ml-task"
   network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
-  cpu                      = "256"
-  memory                   = "512"
+  cpu                      = "1024"
+  memory                   = "2048"
   execution_role_arn       = aws_iam_role.ecs_task_execution_role.arn
   task_role_arn            = aws_iam_role.ecs_task_execution_role.arn
 
   container_definitions = jsonencode([
     {
       name      = "learn-ml-container",
-      image     = "garganshulgarg/learn-data-science:latest", # Replace with your DockerHub image
-      cpu       = 256,
-      memory    = 512,
+      image     = "${var.image_path}:${var.image_tag}", # Replace with your DockerHub image
+      cpu       = 1024,
+      memory    = 2048,
       essential = true,
       portMappings = [
         {
           containerPort = 8888,
-          hostPort      = 80
+          hostPort      = 8888
         }
       ]
     }
@@ -56,8 +56,8 @@ resource "aws_security_group" "ecs_sg" {
   }
 
   ingress {
-    from_port   = 80
-    to_port     = 80
+    from_port   = 8888
+    to_port     = 8888
     protocol    = "tcp"
     cidr_blocks = var.allowed_ips
   }
