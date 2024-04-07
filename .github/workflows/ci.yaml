@@ -81,7 +81,9 @@ jobs:
           aws-region: us-east-1
 
       - name: Terraform init
+        working-directory: infra-as-code
         run: terraform init -upgrade=true -reconfigure -compact-warnings
+        
       - name: Terraform Plan
         working-directory: infra-as-code
         env:
